@@ -31,7 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-     private val listViewModel: ListViewModel by viewModels()
+    private val listViewModel: ListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,26 +39,26 @@ class MainActivity : ComponentActivity() {
             RickNMortyComposeTheme {
                 val listState by listViewModel.rickAndMortyListState.observeAsState(ApiResponse.Loading())
 
-                Scaffold(modifier = Modifier.fillMaxSize()){
+                Scaffold(modifier = Modifier.fillMaxSize()) {
                     when (listState) {
                         is ApiResponse.Loading -> {
-                            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+                            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                                 CircularProgressIndicator()
                             }
-
                         }
                         is ApiResponse.Success -> {
-                            RickList((listState as ApiResponse.Success).data.rickMorties){
+                            RickList((listState as ApiResponse.Success).data.rickMorties) {
                                 Toast.makeText(this, it.name, Toast.LENGTH_SHORT).show()
                             }
                         }
                         is ApiResponse.Failure -> {
-                            Box(modifier = Modifier
-                                .fillMaxSize()
-                                .padding(16.dp), contentAlignment = Alignment.Center){
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(16.dp), contentAlignment = Alignment.Center
+                            ) {
                                 Text((listState as ApiResponse.Failure).message)
                             }
-
                         }
                     }
 
